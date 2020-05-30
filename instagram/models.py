@@ -202,7 +202,7 @@ class Location(ApiModel):
 
 class User(ApiModel):
 
-    def __init__(self, id, *args, **kwargs):
+    def __init__(self, id=None, *args, **kwargs):
         self.id = id
         for key, value in six.iteritems(kwargs):
             setattr(self, key, value)
@@ -211,7 +211,9 @@ class User(ApiModel):
         return "User: %s" % self.username
 
     def __eq__(self, other):
-        return self.id == other.id
+        if self.id:
+            return self.id == other.id
+        return self.username == other.username
 
     def __ne__(self, other):
         return not self == other
